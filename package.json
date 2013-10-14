@@ -19,5 +19,13 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/johngeorgewright/Semantic-Suite/issues"
+  },
+  "dependencies": {
+    "chai": "~1.8.1",
+    "colors": "~0.6.2",
+    "hap": "~1.0.2"
+  },
+  "devDependencies": {
+    "browserify": "~2.34.0"
   }
 }
