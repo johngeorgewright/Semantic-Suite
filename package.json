@@ -1,0 +1,23 @@
+{
+  "name": "semantic-suite",
+  "version": "0.0.0",
+  "description": "A semantic testing suite",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/johngeorgewright/Semantic-Suite.git"
+  },
+  "keywords": [
+    "semantic",
+    "test",
+    "suite"
+  ],
+  "author": "John Wright <johngeorge.wright@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johngeorgewright/Semantic-Suite/issues"
+  }
+}
