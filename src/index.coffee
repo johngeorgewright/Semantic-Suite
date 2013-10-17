@@ -13,7 +13,8 @@ emitter.on 'pass', (message) ->
 emitter.on 'fail', (message) ->
   console.log "\t" + message.red
 
-String::features = (procedure) ->
-  features = Features.factory @toString(), procedure, emitter, global
+String::features = (scenarios) ->
+  features = new Features @toString(), emitter, global
+  features.registerScenarios scenarios
   features.run()
 

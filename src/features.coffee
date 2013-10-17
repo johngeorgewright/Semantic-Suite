@@ -2,22 +2,23 @@ class Features
   constructor: (@name, @emitter, @context) ->
     @scenarios = []
 
-  registerScenario: (procedure) ->
-    @scenarios.push Scenario.factory(procedure, @emitter, @context)
+  registerScenario: (steps) ->
+    scenario = new Scenario @emitter, @context
+    scenario.registerSteps steps
+    @scenarios.push scenario
+
+  registerScenarios: (scenarios) ->
+    @context.Scenario = @registerScenario.bind this
+    @context.expect = chai
+    scenarios()
+    delete @context.Scenario
+    delete @context.expect
 
   run: ->
     @emitter.emit 'feature', @name + ' features'
     scenario.run() for scenario in @scenarios
 
-  @factory: (name, procedure, emitter, context) ->
-    features = new Features name, emitter, context
-    context.Scenario = features.registerScenario.bind features
-    context.expect = require('chai').expect
-    procedure.call context
-    delete global.expect
-    delete context.Scenario
-    features
-
 module.exports = Features
 Scenario = require './scenario'
+{chai} = require 'chai'
 
