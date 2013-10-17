@@ -1,5 +1,8 @@
-require '../../'
+Suite = require '../../'
 Calculator = require './calculator'
+suite = new Suite global
+
+suite.use require '../../build/output/descriptive'
 
 "Calculator".features ->
 

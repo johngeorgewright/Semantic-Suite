@@ -1,20 +1,19 @@
+class Suite
+  constructor: (@context) ->
+    @emitter = new EventEmitter()
+    _this = this
+    String::features = (scenarios) ->
+      _this.feature @toString(), scenarios
+
+  feature: (name, scenarios) ->
+    features = new Feature name, @emitter, @context
+    features.registerScenarios scenarios
+    features.run()
+
+  use: (listener) ->
+    listener @emitter
+
+module.exports = Suite
 {EventEmitter} = require 'events'
-Features = require './features'
-require 'colors'
-
-emitter = new EventEmitter()
-
-emitter.on 'feature', (feature) ->
-  console.log feature.yellow
-
-emitter.on 'pass', (message) ->
-  console.log "\t" + message.green
-
-emitter.on 'fail', (message) ->
-  console.log "\t" + message.red
-
-String::features = (scenarios) ->
-  features = new Features @toString(), emitter, global
-  features.registerScenarios scenarios
-  features.run()
+Feature = require './feature'
 

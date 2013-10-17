@@ -1,4 +1,4 @@
-class Features
+class Feature
   constructor: (@name, @emitter, @context) ->
     @scenarios = []
 
@@ -18,7 +18,7 @@ class Features
     @emitter.emit 'feature', @name + ' features'
     scenario.run() for scenario in @scenarios
 
-module.exports = Features
+module.exports = Feature
 Scenario = require './scenario'
 {chai} = require 'chai'
 
