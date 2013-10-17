@@ -1,6 +1,6 @@
 class Procedure
   constructor: (@type, @fn, @context, @emitter) ->
-    @description = "#{@type} -> #{Scenario.valueAsString @fn}"
+    @description = "#{type} -> #{Scenario.valueAsString fn}"
 
   run: ->
     log = @description
@@ -17,10 +17,10 @@ class Creation
 
   run: ->
     value = undefined
-    @context[name] = =>
+    @emitter.emit 'pass', "Given #{@name} -> #{Scenario.valueAsString @fn}"
+    @context[@name] = =>
       if typeof value is 'undefined'
-        value = fn.call @context
-        @emitter.emit 'pass', "Given #{name} -> #{Scenario.valueAsString value}"
+        value = @fn.call @context
       value
 
 exports.Procedure = Procedure

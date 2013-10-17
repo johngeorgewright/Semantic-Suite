@@ -1,24 +1,21 @@
-{EventEmitter} = require 'events'
-
-class Scenario extends EventEmitter
-  constructor: (@context) ->
+class Scenario
+  constructor: (@context, @emitter) ->
     @currentStepType = null
-    @emitter = new EventEmitter()
     @steps = []
     @cancelled = no
     @emitter.on 'fail', @finish.bind this
 
   registerProcedure: (type, step) ->
-    if type is Scenario.AND
-      type = @currentStepType
-    @steps.push new Procedure type, step, @context, @emitter
     @currentStepType = type
+    step = new Procedure type, step, @context, @emitter
+    @steps.push step
 
   registerCreation: (name, step) ->
+    @currentStepType = Scenario.GIVEN
     if step
       @steps.push new Creation name, step, @context, @emitter
     else
-      @registerProcedure Scenario.GIVEN, step
+      @registerProcedure Scenario.GIVEN, name
 
   registerAnother: ->
     switch @currentStepType
@@ -29,7 +26,7 @@ class Scenario extends EventEmitter
     @each (step) -> step.run()
 
   each: (fn) ->
-    for step in steps
+    for step in @steps
       break if @cancelled
       fn step
 
@@ -43,15 +40,16 @@ class Scenario extends EventEmitter
       when 'object' then JSON.stringify value
       else value
 
-  @factory: (steps, context=global) ->
-    scenario                = new Scenario context
+  @factory: (steps, emitter, context=global) ->
+    scenario                = new Scenario context, emitter
     context[Scenario.WHEN]  = (procedure) -> scenario.registerProcedure Scenario.WHEN, procedure
     context[Scenario.THEN]  = (procedure) -> scenario.registerProcedure Scenario.THEN, procedure
     context[Scenario.AND]   = scenario.registerAnother.bind scenario
-    context[Scenario.GIVEN] = (name, fn) -> scenario.registerCreation Scenario.GIVEN, name, fn
+    context[Scenario.GIVEN] = (name, fn) -> scenario.registerCreation name, fn
     steps.call context
     for stepType in [Scenario.GIVEN, Scenario.WHEN, Scenario.AND, Scenario.THEN]
       delete context[stepType]
+    scenario
 
   @GIVEN: 'Given'
   @WHEN: 'When'

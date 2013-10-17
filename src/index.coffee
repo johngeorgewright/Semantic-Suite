@@ -1,18 +1,24 @@
-{EventEmitter} = require 'hap'
+{EventEmitter} = require 'events'
 Scenario = require './scenario'
-emitter = new EventEmitter()
 require 'colors'
 
-global.Scenario = (steps) -> Scenario.factory steps
-global.expect = require('chai').expect
+emitter = new EventEmitter()
 
-emitter.on 'pass', (e) ->
-  console.log "\t" + e.val().green
+emitter.on 'feature', (feature) ->
+  console.log feature.yellow
 
-emitter.on 'fail', (e) ->
-  console.log "\t" + e.val().red
+emitter.on 'pass', (message) ->
+  console.log "\t" + message.green
+
+emitter.on 'fail', (message) ->
+  console.log "\t" + message.red
 
 String::features = (procedure) ->
-  console.log "#{@toString()} features".green
+  global.Scenario = (steps) ->
+    scenario = Scenario.factory steps, emitter
+    scenario.run()
+  global.expect = require('chai').expect
+  emitter.emit 'feature', @toString() + ' features'
   procedure()
+  delete global.expect
 
