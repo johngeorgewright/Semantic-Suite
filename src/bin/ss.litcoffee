@@ -4,12 +4,20 @@ The Semantic Suite CLI Tool
 Requirements
 ------------
 
+The CLI tool requires the "commander" package.
+
     program = require 'commander'
     path = require 'path'
     pkg = require '../../package.json'
 
-Specifying the options
-----------------------
+It can automatically compile CoffeeScript files.
+
+    try
+      require 'coffee-script'
+    catch e
+
+Options
+-------
 
 We'll use the version specified in the package.json.
 
@@ -17,19 +25,18 @@ We'll use the version specified in the package.json.
 
 We'll re-write the usage so specify that arguments (file paths) are required.
 
-    program.usage('[options] <file ...>')
+    program.usage '[options] <file ...>'
 
 Reporters can be specified with the "-r" option.
 
-    program
-      .option('-r, --reporter <reporter>')
-      .parse(process.argv)
+    program.option '-r, --reporter <reporter>'
 
 Validation
 ----------
 
 The only requirement is to specify at least one file path.
 
+    program.parse process.argv
     program.help() unless program.args.length > 0
 
 The reporter will be optional, and default to the "descriptive" reporter.
@@ -46,5 +53,6 @@ The suite will add methods to the global scope.
     suite.use require '../../build/reporter/' + program.reporter
 
     for file in program.args
-      require path.resolve file
+      resolvedPath = path.resolve file
+      require resolvedPath
 

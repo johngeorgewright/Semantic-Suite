@@ -1,18 +1,23 @@
 class Feature
   constructor: (@name, @emitter, @context) ->
+    @backgroundSteps = ->
     @scenarios = []
+
+  registerBackground: (steps) ->
+    @backgroundSteps = steps
 
   registerScenario: (steps) ->
     scenario = new Scenario @emitter, @context
+    scenario.registerSteps @backgroundSteps
     scenario.registerSteps steps
     @scenarios.push scenario
 
   registerScenarios: (scenarios) ->
+    @context.Background = @registerBackground.bind this
     @context.Scenario = @registerScenario.bind this
-    @context.expect = chai
     scenarios()
+    delete @context.Background
     delete @context.Scenario
-    delete @context.expect
 
   run: ->
     @emitter.emit 'feature', @name + ' features'
@@ -20,5 +25,4 @@ class Feature
 
 module.exports = Feature
 Scenario = require './scenario'
-{chai} = require 'chai'
 

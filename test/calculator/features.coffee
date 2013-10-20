@@ -1,4 +1,5 @@
 Calculator = require './calculator'
+{expect} = require 'chai'
 
 "Calculator".features ->
   Scenario ->
@@ -6,5 +7,5 @@ Calculator = require './calculator'
     And -> calculator().left = 50
     And -> calculator().right = 70
     When -> calculator().add()
-    Then -> expect(calculator().total).to.equal 121
+    Then -> expect(calculator().total).to.equal 120
 
