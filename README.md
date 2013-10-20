@@ -35,24 +35,27 @@ Although the above example is fine and dandy, I feel I'm always repeating myself
 
 ```coffee
 "Calculator".features ->
-  Given 'calculator', -> new Calculator()
-  When -> calculator().left = 50
-  And -> calculator().right = 70
-  And -> calculator().add()
-  Then -> expect(calculator().total).to.be 120
+  Scenario ->
+    Given 'calculator', -> new Calculator()
+    When -> calculator().left = 50
+    And -> calculator().right = 70
+    And -> calculator().add()
+    Then -> expect(calculator().total).to.be 120
 ```
 
-If you've used any testing suite with "Gherkin" syntax, or used something like "RSpec" you may notice some influence. There will be no need for contextual blocks and indentation as every scenario will start with `Given()`.
+If you've used any testing suite with "Gherkin" syntax, or used something like "RSpec" you may notice some influence.
 
 Here's the same example written in plain JavaScript. It's not quite as nice, but it still seems pretty readable:
 
 ```javascript
 "Calculator".features(function () {
-  Given('calculator', function () { return new Calculator(); });
-  When(function () { calculator().left = 50; });
-  And(function () { calculator().right = 70; });
-  And(function () { calculator().add(); });
-  Then(function () { expect(calculator().total).to.be(120); });
+  Scenario(function () {
+    Given('calculator', function () { return new Calculator(); });
+    When(function () { calculator().left = 50; });
+    And(function () { calculator().right = 70; });
+    And(function () { calculator().add(); });
+    Then(function () { expect(calculator().total).to.be(120); });
+  });
 });
 ```
 
@@ -60,11 +63,13 @@ Or, in TypeScript:
 
 ```javascript
 "Calculator".features(=> {
-  Given('calculator', => return new Calculator());
-  When(=> calculator.left = 50);
-  And(=> calculator.right = 70);
-  And(=> calculator.add());
-  Then(=> expect(calculator().total).to.be(120));
+  Scenario(=> {
+    Given('calculator', => return new Calculator());
+    When(=> calculator.left = 50);
+    And(=> calculator.right = 70);
+    And(=> calculator.add());
+    Then(=> expect(calculator().total).to.be(120));
+  });
 });
 ```
 

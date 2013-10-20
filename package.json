@@ -4,7 +4,8 @@
   "description": "A semantic testing suite",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "coffee -c -b -w -o build src"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "dependencies": {
     "chai": "~1.8.1",
     "colors": "~0.6.2",
-    "hap": "~1.0.2"
+    "hap": "~1.0.2",
+    "commander": "~2.0.0"
   },
   "devDependencies": {
     "browserify": "~2.34.0"
