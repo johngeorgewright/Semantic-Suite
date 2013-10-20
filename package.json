@@ -5,7 +5,11 @@
   "main": "build/index.js",
   "scripts": {
     "test": "sh test.sh",
-    "dev": "coffee -c -b -w -o build src"
+    "dev": "coffee -c -b -w -o build src",
+    "build": "coffee -c -b -o build src",
+    "build-browser": "browserify -o semantic-suite-min.js build/index.js",
+    "minify": "uglifyjs semantic-suite-min.js -o semantic-suite-min.js -m",
+    "prepublish": "npm run build && npm run build-browser && npm run minify"
   },
   "repository": {
     "type": "git",
@@ -29,6 +33,7 @@
   },
   "devDependencies": {
     "browserify": "~2.34.0",
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "uglify-js": "~2.4.0"
   }
 }
