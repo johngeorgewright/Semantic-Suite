@@ -50,7 +50,10 @@ class Scenario
         value
           .toString()
           .replace(/\s{2,}/g, ' ')
-          .replace(/function\s*\([^\)]*\)\s*\{\s*return\s*/, '')
+          .replace(///
+            function \s* \( [^\)]* \) \s* \{
+              \s*return\s*
+          ///, '')
           .replace(/;\s*\}$/, '')
       else value
 
