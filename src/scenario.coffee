@@ -32,6 +32,7 @@ class Scenario
       delete @context[stepType]
 
   run: ->
+    @emitter.emit 'scenario'
     @each (step) -> step.run()
 
   each: (fn) ->
