@@ -72,11 +72,11 @@ Installation
 
 1. Install Node.js
 2. Clone this repo.
-3. `npm link`
+3. `[sudo] npm link`
 
 Using
 -----
 
 1. Create a directory somewhere to write some tests.
-2. `ss my-directory/some-test` (leaving the extension off of the file name).
+2. `sems my-directory/some-test.js` (leaving the extension off of the file name).
 

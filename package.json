@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "A semantic testing suite",
   "main": "build/index.js",
+  "bin": {
+    "sems": "bin/sems.js"
+  },
   "scripts": {
     "test": "sh test.sh",
     "dev": "coffee -c -b -w -o build src",
