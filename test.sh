@@ -1,3 +1,3 @@
-node bin/ss.js test/calculator/features
-node bin/ss.js test/background/features
+node bin/sems.js test/calculator/feature
+node bin/sems.js test/background/feature
 

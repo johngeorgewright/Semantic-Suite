@@ -1,14 +1,14 @@
 Calculator = require '../calculator/calculator'
 {expect} = require 'chai'
 
-"Background".features ->
+"Background".feature ->
   Background ->
     Given 'calculator', -> new Calculator()
 
-  Scenario ->
+  "Instantiation".scenario ->
     Then -> expect(calculator()).to.be.instanceOf Calculator
 
-  Scenario ->
+  "Adding".scenario ->
     Given -> calculator().left = 50
     And   -> calculator().right = 70
     When  -> calculator().add()

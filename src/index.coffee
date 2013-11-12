@@ -1,14 +1,22 @@
 class Suite
   constructor: (@context) ->
     @emitter = new EventEmitter()
+    @features = []
     _this = this
-    String::features = (scenarios) ->
-      _this.feature @toString(), scenarios
+    String::feature = (scenarios) ->
+      _this.registerFeature @toString(), scenarios
 
-  feature: (name, scenarios) ->
-    features = new Feature name, @emitter, @context
-    features.registerScenarios scenarios
-    features.run()
+  deconstruct: ->
+    delete String::feature
+
+  registerFeature: (name, scenarios) ->
+    feature = new Feature name, @emitter, @context
+    feature.registerScenarios scenarios
+    @features.push feature
+
+  run: ->
+    @emitter.emit 'suite'
+    feature.run() for feature in @features
 
   use: (listener) ->
     listener @emitter

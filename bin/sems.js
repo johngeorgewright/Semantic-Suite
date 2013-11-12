@@ -1,3 +1,3 @@
 #!/usr/bin/env node
-require('../build/bin/ss');
+require('../build/bin/sems');
 

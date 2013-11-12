@@ -1,6 +1,21 @@
+valueAsString = (value) ->
+  switch typeof value
+    when 'string' then "\"#{value}\""
+    when 'object' then JSON.stringify value
+    when 'function'
+      value
+        .toString()
+        .replace(/\s{2,}/g, ' ')
+        .replace(///
+          function \s* \( [^\)]* \) \s* \{
+            \s*return\s*
+        ///, '')
+        .replace(/;\s*\}$/, '')
+    else value
+
 class Procedure
   constructor: (@type, @fn, @context, @emitter) ->
-    @description = "#{type} -> #{Scenario.valueAsString fn}"
+    @description = "#{type} -> #{valueAsString fn}"
 
   run: ->
     log = @description
@@ -10,14 +25,14 @@ class Procedure
     catch e
       type = 'fail'
       log += "\n#{e.message}"
-    @emitter.emit type, log
+    @emitter.emit type, message: log
 
 class Creation
   constructor: (@name, @fn, @context, @emitter) ->
 
   run: ->
     value = undefined
-    @emitter.emit 'pass', "Given #{@name} -> #{Scenario.valueAsString @fn}"
+    @emitter.emit 'pass', message: "Given #{@name} -> #{valueAsString @fn}"
     @context[@name] = =>
       if typeof value is 'undefined'
         value = @fn.call @context
@@ -25,6 +40,4 @@ class Creation
 
 exports.Procedure = Procedure
 exports.Creation  = Creation
-
-Scenario = require './scenario'
 

@@ -1,5 +1,5 @@
 class Scenario
-  constructor: (@emitter, @context) ->
+  constructor: (@name, @emitter, @context) ->
     @currentStepType = null
     @steps = []
     @cancelled = no
@@ -32,7 +32,7 @@ class Scenario
       delete @context[stepType]
 
   run: ->
-    @emitter.emit 'scenario'
+    @emitter.emit 'scenario', name: @name
     @each (step) -> step.run()
 
   each: (fn) ->
@@ -42,21 +42,6 @@ class Scenario
 
   finish: ->
     @cancelled = yes
-
-  @valueAsString: (value) ->
-    switch typeof value
-      when 'string' then "\"#{value}\""
-      when 'object' then JSON.stringify value
-      when 'function'
-        value
-          .toString()
-          .replace(/\s{2,}/g, ' ')
-          .replace(///
-            function \s* \( [^\)]* \) \s* \{
-              \s*return\s*
-          ///, '')
-          .replace(/;\s*\}$/, '')
-      else value
 
   @GIVEN: 'Given'
   @WHEN: 'When'

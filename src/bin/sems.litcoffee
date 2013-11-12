@@ -6,9 +6,11 @@ Requirements
 
 The CLI tool requires the "commander" package.
 
+    fs = require 'fs'
     program = require 'commander'
     path = require 'path'
     pkg = require '../../package.json'
+    requireDirectory = require 'require-directory'
 
 It can automatically compile CoffeeScript files.
 
@@ -25,7 +27,7 @@ We'll use the version specified in the package.json.
 
 We'll re-write the usage so specify that arguments (file paths) are required.
 
-    program.usage '[options] <file ...>'
+    program.usage '[options] <file|dir ...>'
 
 Reporters can be specified with the "-r" option.
 
@@ -46,13 +48,27 @@ The reporter will be optional, and default to the "descriptive" reporter.
 Running the suite
 -----------------
 
+    Suite = require '../'
+
 The suite will add methods to the global scope.
 
-    Suite = require '../'
     suite = new Suite global
+
+Add a configured reported.
+
     suite.use require '../../build/reporter/' + program.reporter
+
+The passed files will be included in to this script.
 
     for file in program.args
       resolvedPath = path.resolve file
-      require resolvedPath
+      if fs.lstatSync(resolvedPath).isDirectory()
+        requireDirectory module, resolvedPath
+      else
+        require resolvedPath
+
+And then the test suite is run.
+
+    suite.run()
+    suite.deconstruct()
 

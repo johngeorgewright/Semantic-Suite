@@ -1,7 +1,7 @@
 Calculator = require './calculator'
 {expect} = require 'chai'
 
-"Calculator".features ->
+"Calculator".feature ->
   Scenario ->
     Given 'calculator', -> new Calculator()
     And -> calculator().left = 50

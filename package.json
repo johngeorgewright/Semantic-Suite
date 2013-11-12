@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "colors": "~0.6.2",
-    "commander": "~2.0.0"
+    "commander": "~2.0.0",
+    "require-directory": "~1.1.1"
   },
   "devDependencies": {
     "browserify": "~2.34.0",

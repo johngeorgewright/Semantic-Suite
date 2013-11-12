@@ -1,15 +1,16 @@
 require 'colors'
 
 module.exports = (emitter) ->
-  emitter.on 'feature', (feature) ->
-    console.log feature.yellow
+  emitter.on 'feature', (args) ->
+    console.log args.name.yellow
 
-  emitter.on 'scenario', ->
-    console.log "\tScenario".yellow
+  emitter.on 'scenario', (args) ->
+    name = if args.name then "#{args.name} scenario" else "Scenario"
+    console.log "\t#{name}".yellow
 
-  emitter.on 'pass', (message) ->
-    console.log "\t\t" + message.green
+  emitter.on 'pass', (args) ->
+    console.log "\t\t" + args.message.green
 
-  emitter.on 'fail', (message) ->
-    console.log "\t\t" + message.red
+  emitter.on 'fail', (args) ->
+    console.log "\t\t" + args.message.red
 
