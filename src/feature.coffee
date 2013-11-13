@@ -20,10 +20,14 @@ class Feature
     scenarios()
     delete @context.Background
     delete @context.Scenario
+    delete String::scenario
 
   run: ->
-    @emitter.emit 'feature', name: "#{@name} feature"
+    @emitter.emit 'feature',
+      name: @name + ' feature'
+      totalScenarios: @scenarios.length
     scenario.run() for scenario in @scenarios
+    @emitter.emit 'feature end'
 
 module.exports = Feature
 Scenario = require './scenario'

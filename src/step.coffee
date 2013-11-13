@@ -21,18 +21,20 @@ class Procedure
     log = @description
     try
       @fn.call @context
-      type = 'pass'
+      @emitter.emit 'pass', message: log
     catch e
-      type = 'fail'
       log += "\n#{e.message}"
-    @emitter.emit type, message: log
+      @emitter.emit 'fail',
+        message: log
+        error: e
 
 class Creation
   constructor: (@name, @fn, @context, @emitter) ->
 
   run: ->
     value = undefined
-    @emitter.emit 'pass', message: "Given #{@name} -> #{valueAsString @fn}"
+    @emitter.emit 'pass',
+      message: "Given #{@name} -> #{Scenario.valueAsString @fn}"
     @context[@name] = =>
       if typeof value is 'undefined'
         value = @fn.call @context
