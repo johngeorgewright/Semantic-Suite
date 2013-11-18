@@ -1,27 +1,22 @@
-class Suite
-  constructor: (@context) ->
-    @emitter = new EventEmitter()
-    @features = []
-    _this = this
-    String::feature = (scenarios) ->
-      _this.registerFeature @toString(), scenarios
+requireDirectory = require 'require-directory'
+path = require 'path'
 
-  deconstruct: ->
-    delete String::feature
+ucwords = (str) ->
+  wordSeparation = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g
+  newStr = "#{str} ".replace wordSeparation, ($1) -> $1.toUpperCase()
+  newStr.trim()
 
-  registerFeature: (name, scenarios) ->
-    feature = new Feature name, @emitter, @context
-    feature.registerScenarios scenarios
-    @features.push feature
+attach = (fullPath) ->
+  baseName = path.basename fullPath, path.extname fullPath
+  if /^\./.test(baseName) or /bin\//.test(fullPath)
+    no
+  else if /reporter\//.test fullPath
+    yes
+  else
+    className = ucwords baseName
+    module.exports[className] = require fullPath
+    no
 
-  run: ->
-    @emitter.emit 'suite'
-    feature.run() for feature in @features
-
-  use: (listener) ->
-    listener @emitter
-
-module.exports = Suite
-{EventEmitter} = require 'events'
-Feature = require './feature'
+for key, value of requireDirectory(module, __dirname, attach)
+  module.exports[key] = value
 

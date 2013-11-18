@@ -48,7 +48,8 @@ The reporter will be optional, and default to the "descriptive" reporter.
 Running the suite
 -----------------
 
-    Suite = require '../'
+    sems = require '../'
+    Suite = sems.Suite
 
 The suite will add methods to the global scope.
 
@@ -56,7 +57,7 @@ The suite will add methods to the global scope.
 
 Add a configured reported.
 
-    suite.use require '../../build/reporter/' + program.reporter
+    suite.use sems.reporter[program.reporter]
 
 The passed files will be included in to this script.
 
