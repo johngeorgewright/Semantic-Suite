@@ -21,8 +21,8 @@ log = (str) ->
   console.log trim str
 
 module.exports = (emitter) ->
-  emitter.on 'feature', (feature) ->
-    log feature.yellow
+  emitter.on 'feature', (details) ->
+    log details.name.yellow
 
   emitter.on 'feature end', ->
     log ''

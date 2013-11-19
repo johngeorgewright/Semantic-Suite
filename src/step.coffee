@@ -34,7 +34,7 @@ class Creation
   run: ->
     value = undefined
     @emitter.emit 'pass',
-      message: "Given #{@name} -> #{Scenario.valueAsString @fn}"
+      message: "Given #{@name} -> #{valueAsString @fn}"
     @context[@name] = =>
       if typeof value is 'undefined'
         value = @fn.call @context
