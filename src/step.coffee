@@ -13,6 +13,9 @@ valueAsString = (value) ->
         .replace(/;\s*\}$/, '')
     else value
 
+hyphenatedToCamelCase = (value) ->
+  value.replace /[-\s]+([a-z])/g, (g) -> g[1].toUpperCase()
+
 class Procedure
   constructor: (@type, @fn, @context, @emitter) ->
     @description = "#{type} -> #{valueAsString fn}"
@@ -29,7 +32,8 @@ class Procedure
         error: e
 
 class Creation
-  constructor: (@name, @fn, @context, @emitter) ->
+  constructor: (name, @fn, @context, @emitter) ->
+    @name = hyphenatedToCamelCase name
 
   run: ->
     value = undefined
