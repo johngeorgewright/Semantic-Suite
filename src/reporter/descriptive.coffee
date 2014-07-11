@@ -36,5 +36,5 @@ module.exports = (emitter) ->
     log "        " + details.message.green
 
   emitter.on 'fail', (details) ->
-    log "        " + details.message.red
+    console.log "        " + details.message.red
 
