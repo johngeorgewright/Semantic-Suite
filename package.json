@@ -34,7 +34,10 @@
     "require-directory": "~1.1.1"
   },
   "devDependencies": {
+    "bluebird": "^2.3.11",
     "browserify": "~2.34.0",
+    "chai": "^1.10.0",
+    "chai-as-promised": "^4.1.1",
     "coffee-script": "~1.6.3",
     "uglify-js": "~2.4.0"
   }
