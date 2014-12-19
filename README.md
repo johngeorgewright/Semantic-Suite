@@ -67,6 +67,19 @@ but it still seems pretty readable:
 });
 ```
 
+Or ... in ES6 style:
+
+```js
+"Calculator".features(() => {
+  Scenario(() => {
+    Given("calculator", () => new Calculator());
+    When(() => calculator().left = 50);
+    And(() => calculator().right = 70);
+    Then(() => expect(calculator().total).to.be(120));
+  });
+});
+```
+
 Installation
 ------------
 
