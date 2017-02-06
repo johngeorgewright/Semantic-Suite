@@ -1,6 +1,8 @@
 Semantic Suite *alpha*
 ======================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/johngeorgewright/Semantic-Suite.svg)](https://greenkeeper.io/)
+
 This **will** be a semantic style testing suite for JavaScript and then
 eventually other languages.
 
